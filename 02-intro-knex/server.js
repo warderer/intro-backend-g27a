@@ -1,3 +1,4 @@
+require('dotenv').config() // Cargo las variables de entorno .env
 const express = require('express')
 // Importar rutas de mis vistas
 const homeRoutes = require('./routes/homeRoutes')
