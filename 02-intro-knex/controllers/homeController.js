@@ -1,5 +1,5 @@
 /* Los controladores tienen la logica del negocio */
-const { create, findAll, findOne } = require('../models/Homes')
+const { create, findAll, findOne, update, destroy, softDelete } = require('../models/Homes')
 
 const createHome = (req, res) => {
   // Aquí yo deberia crear mi home
@@ -25,8 +25,29 @@ const findOneHome = (req, res) => {
     .catch((error) => res.status(400).send({ error: error.message }))
 }
 
+const updateOneHome = (req, res) => {
+  update(req.params.idHome, req.body)
+    .then((home) => res.status(200).send(home))
+    .catch((error) => res.status(400).send({ error: error.message }))
+}
+
+const destroyOneHome = (req, res) => {
+  destroy(req.params.idHome)
+    .then(() => res.status(204).send()) // 204: No Content
+    .catch((error) => res.status(400).send({ error: error.message }))
+}
+
+const SoftDeleteOneHome = (req, res) => {
+  softDelete(req.params.idHome)
+    .then(() => res.status(204).send()) // 204: No Content
+    .catch((error) => res.status(400).send({ error: error.message }))
+}
+
 module.exports = {
   createHome,
   findAllHomes,
-  findOneHome
+  findOneHome,
+  updateOneHome,
+  destroyOneHome,
+  SoftDeleteOneHome
 }

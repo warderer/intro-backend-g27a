@@ -32,9 +32,37 @@ const findOne = (houseId) => {
     .where('active', true)
 }
 
+const update = (houseId, bodyToUpdate) => {
+  // Actualizar un registro de la tabla HOMES
+  return knex
+    .update(bodyToUpdate)
+    .from('homes')
+    .where('house_id', houseId)
+    .returning(['house_id', 'title', 'description', 'guests', 'address', 'rental_price', 'fk_user', 'active', 'created_at'])
+}
+
+// Voy a borrar un registro de manera REAL de la base de datos.
+const destroy = (houseId) => {
+  return knex
+    .del() // delete
+    .from('homes')
+    .where('house_id', houseId)
+}
+
+// Borrado lógico, solo cambio 'active' de true a false
+const softDelete = (houseId) => {
+  return knex
+    .update({ active: false })
+    .from('homes')
+    .where('house_id', houseId)
+}
+
 // Paso #3: Exportar las funciones que yo cree, para que el controlador las utilice
 module.exports = {
   create,
   findAll,
-  findOne
+  findOne,
+  update,
+  destroy,
+  softDelete
 }
