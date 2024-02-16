@@ -1,5 +1,5 @@
 /* Los controladores tienen la logica del negocio */
-const { create, findAll } = require('../models/Homes')
+const { create, findAll, findOne } = require('../models/Homes')
 
 const createHome = (req, res) => {
   // Aquí yo deberia crear mi home
@@ -19,7 +19,14 @@ const findAllHomes = (req, res) => {
     .catch((error) => res.status(400).send({ error: error.message }))
 }
 
+const findOneHome = (req, res) => {
+  findOne(req.params.idHome)
+    .then((home) => res.status(200).send(home))
+    .catch((error) => res.status(400).send({ error: error.message }))
+}
+
 module.exports = {
   createHome,
-  findAllHomes
+  findAllHomes,
+  findOneHome
 }
